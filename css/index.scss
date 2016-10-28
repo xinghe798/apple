@@ -1,0 +1,361 @@
+@import "base";
+*{
+  margin:0;
+  padding:0;
+  list-style: none;
+}
+body{
+  background: #f2f2f2;
+}
+a{
+  text-decoration: none;
+}
+.header{
+  width:100%;
+  background: rgba(0,0,0,0.8);
+  position: relative;
+  .phone{
+    position: absolute;
+    display: none;
+    @include ons{
+      display: block;
+    }
+  }
+  .nav-list{
+    @include ons{
+      height:48px;
+    }
+    height:44px;
+    max-width:980px;
+    margin:0 auto;
+    text-align: justify;
+    position: relative;
+    &::after{
+      content:"";
+      width:100%;
+      display: inline-block;
+      height:0;
+      font-size: 0;
+      line-height: 0;
+    }
+  }
+  .nav-item{
+    @include ons{
+      display: none;
+    }
+    display: inline-block;
+    a{
+      @include ons{
+        height:48px;
+      }
+      display: block;
+      height:44px;
+      transition: opacity .5s ease,transform 0.5s linear;
+      &:hover{
+        opacity: 0.5;
+      }
+    }
+    .yincang.searching{
+      transform: scale(0,0);
+    }
+  }
+  $nav-map:(
+    "logo":20px,
+    "mac":31px,
+    "ipad":30px,
+    "iphone":48px,
+    "watch":44px,
+    "music":40px,
+    "support":57px,
+    "search":20px,
+    "bag":18px,
+  );
+  @each $v in map_keys($nav-map){
+    .#{$v}{
+      width:map_get($nav-map,$v);
+      background-image: url("../images/" + $v + ".svg");
+    }
+  }
+  .search-box{
+     @include zuoyou;
+     top:0;
+     z-index: -1;
+    max-width:682px;
+    height:44px+196px;
+    overflow: hidden;
+    padding-top:44px;
+    .search-box-inner{
+      position: absolute;
+      top:0;
+      left:0;
+      width:682px;
+      height:44px;
+      background: rgba(0,0,0,0.8);
+      opacity: 1;
+      transform:translate3d(1500px,0,0);
+      transition:opacity 0.5s ease,transform 0.5s ease;
+      .search-input{
+        @include shangxia;
+        outline:none;
+        background: transparent;
+        border:none;
+      }
+    }
+    .search-box-inner.searching{
+      opacity: 1;
+      transform:translate3d(0,0,0);
+    }
+    &.searching{
+      z-index: 1;
+    }
+    .search-box-list{
+      //display: none;
+      opacity: 0;
+      width:602px;
+      height:196px;
+      background:#fff;
+      padding:0 40px;
+      h3{
+        font-size: 12px;
+        line-height: 1;
+        font-weight: 400;
+        letter-spacing: normal;
+        color: #999;
+        padding-top:24px;
+      }
+      li{
+        width:100%;
+        height:30px;
+        margin:5px 0;
+        line-height: 30px;
+        cursor: pointer;
+        position: relative;
+        left:100%;
+        top:0;
+        font-size: 15px;
+        line-height: 2;
+        font-weight: 400;
+        letter-spacing: normal;
+        color: #999;
+        &:hover{
+          color:blue;
+          background: #f2f2f2;
+        }
+      }
+    }
+    .search-box-list.searching{
+      //display: block;
+      opacity: 1;
+      @for $i from 2 through 5{
+      li:nth-child(#{$i}){
+        left:0;
+        transition:left .5s ease ($i/2)*0.2s;
+      }
+    }
+    }
+   }
+
+}
+
+.carousel{
+  width:100%;
+  min-height:200px;
+  max-height:550px;
+  height:calc(100vh - 76px);
+  position: relative;
+  .carousel-inner{
+    width:100%;
+    height:100%;
+    position: relative;
+    overflow: hidden;
+    a{
+      position: absolute;
+      width:100%;
+      height:100%;
+      background-size:contain;
+      background-position: bottom center;
+      background-repeat: no-repeat;
+      transform: translate3d(0,0,0);
+    }
+    .active{
+      z-index: 2;
+      transition: transform .5s ease;
+      transform: translate3d(0,0,0);
+    }
+    .right{
+      transform: translate3d(100%,0,0);
+    }
+    .left{
+      transform: translate3d(-100%,0,0);
+    }
+    .enter{
+      z-index: 1;
+      transition: transform .5s ease;
+      transform: translate3d(300px,0,0);
+    }
+    .leave{
+      z-index: 1;
+      transition: transform .5s ease;
+      transform: translate3d(-300px,0,0);
+    }
+    .iphone{
+      background-color: black;
+      background-image: url(../images/iphone_large.jpg);
+    }
+    .watch{
+      background-color: #f2f2f2;
+      background-image: url(../images/watch_large.jpg);
+    }
+    .airpods{
+      background-color: #ffffff;
+      background-image: url(../images/airpods_large.jpg);
+    }
+    .event{
+      background-color: #000;
+      background-image: url(../images/event_large.jpg);
+    }
+  }
+  .dot-nav{
+    position: absolute;
+    bottom:40px;
+    z-index: 9999999999;
+    width:100%;
+    .dot-nav-inner{
+      width:240px;
+      margin:0 auto;
+      height:4px;
+      text-align: justify;
+      &::after{
+        display: inline-block;
+        content: "";
+        width:100%;
+        height:0;
+      }
+      .dot{
+        display: inline-block;
+        width: 50px;
+        height: 4px;
+        cursor: pointer;
+        background: #333;
+      }
+      .dot.active{
+          background-color: #777;
+      }
+    }
+  }
+}
+
+$imgs-li:"macos_sierra","ios","watchos","music";
+.imgs-box{
+  display: block;
+  width:100%;
+  overflow:hidden;
+  li{
+    height:200px;
+  }
+  @each $v in $imgs-li{
+    .#{$v}{
+      background:url("../images/"+ $v +"_large.jpg")no-repeat center center;
+    }
+  }
+}
+.col{
+  float:left;
+}
+.row{
+  overflow:hidden;
+}
+@for $i from 1 through 12{
+  .l-#{$i}{
+    width:percentage($i/12);
+  }
+}
+@include onm{
+  @for $i from 1 through 12{
+    .m-#{$i}{
+      width:percentage($i/12);
+    }
+  }
+  .imgs-box {
+    @each $v in $imgs-li{
+      .#{$v}{
+        background:url("../images/"+ $v +"_medium.jpg")no-repeat center center;
+      }
+    }
+  }
+}
+@include ons{
+  @for $i from 1 through 12{
+    .s-#{$i}{
+      width:percentage($i/12);
+    }
+  }
+  .imgs-box {
+    @each $v in $imgs-li{
+      .#{$v}{
+        background:url("../images/"+ $v +"_small.jpg")no-repeat center center;
+      }
+    }
+  }
+}
+
+.nav {
+  max-width: 980px;
+  //@include zuoyou;
+  margin:0 auto;
+  height: 220px;
+  padding-top: 20px;
+  font-size: 14px;
+  clear: both;
+  .nav-inner {
+    width: 20%;
+    float: left;
+    h3 {
+      height: 20px;
+      font-size: 12px;
+      line-height: 20px;
+      padding: 0;
+      margin: 0;
+      color: #666;
+    }
+    h3.ding{
+      margin-top:20px;
+    }
+    a {
+      display: block;
+      font-size: 12px;
+      line-height: 20px;
+      color: #666;
+      &:hover {
+        color: #333;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+.footer{
+  max-width: 980px;
+  margin:0 auto;
+  margin-top: 20px;
+  h3 {
+    height: 20px;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 0;
+    margin: 0;
+    color: #aaa;
+    a{
+      color:#666;
+      &:hover {
+        color: #666;
+        text-decoration: underline;
+      }
+    }
+    a.shang{
+      color:cornflowerblue;
+    }
+    a.xia{
+      color:#aaa;
+    }
+  }
+}
